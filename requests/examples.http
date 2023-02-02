@@ -1,0 +1,6 @@
+POST http://localhost:4566/restapis/ko7ao81f4e/local/_user_request_/todos HTTP/1.1
+
+{
+    "text": "create a localstack POC",
+    "checked": false,
+}

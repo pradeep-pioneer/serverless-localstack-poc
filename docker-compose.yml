@@ -1,0 +1,58 @@
+version: "3.8"
+services:
+  dev:
+    image: thegeeksdiary/serverless:latest
+    container_name: serverless
+    volumes:
+      - "./:/app-code"
+      # - "./.editorconfig:/app-code/editorconfig"
+      # - "./.gitignore:/app-code/.gitignore"
+      # - "./bitbucket-pipelines.yml:/app-code/bitbucket-pipelines.yml"
+      # - "./functions.ts:/app-code/functions.ts"
+      # - "./jest.config.js:/app-code/jest.config.js"
+      # - "./package-lock.json:/app-code/package-lock.json"
+      # - "./package.json:/app-code/package.json"
+      # - "./resources.ts:/app-code/resources.ts"
+      # - "./serverless.ts:/app-code/serverless.ts"
+      # - "./tsconfig.json:/app-code/tsconfig.json"
+      # - "./.ssh:/root/.ssh"
+    environment:
+      - AWS_CONFIG_FILE=/root/.aws/config
+      - AWS_SHARED_CREDENTIALS_FILE=/root/.aws/credentials
+      - EDGE_PORT=4566
+      - LOCALSTACK_HOSTNAME=aws
+    networks:
+      - app
+    depends_on:
+      - aws
+    command: /bin/bash
+    stdin_open: true
+    tty: true
+  aws:
+    image: thegeeksdiary/localstack-dev:latest
+    container_name: localstack
+    ports:
+      - "53:53"
+      - "443:443"
+      - "4566-4620:4566-4620"
+      - "4510-4559:4510-4559"
+      - "8080:8080"
+    environment:
+      - SERVICES="serverless,cognito,rds,sqs,sns,cloudformation,opensearchserverless,opensearch,dynamodb,apigateway,apigatewayv2,lambda"
+      - HOSTNAME=aws
+      - HOSTNAME_EXTERNAL=localhost
+      - PERSISTENCE=1
+      - DEBUG=1
+      - PORT_WEB_UI=8080
+      - START_WEB=1
+      - LAMBDA_EXECUTOR=docker
+      - PROVIDER_OVERRIDE_LAMBDA=asf
+      - DOCKER_HOST=unix:///var/run/docker.sock
+      - EAGER_SERVICE_LOADING=1
+    networks:
+      - app
+    volumes:
+      - "//var/run/docker.sock:/var/run/docker.sock"
+networks:
+  app:
+    driver: bridge
