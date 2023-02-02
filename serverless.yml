@@ -7,7 +7,7 @@ custom:
     stages:
       - local
     lambda:
-      mountCode: True
+      mountCode: False
     docker:
       # Enable this flag to run "docker ..." commands as sudo
       sudo: True
