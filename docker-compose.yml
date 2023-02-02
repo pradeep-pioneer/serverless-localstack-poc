@@ -30,12 +30,12 @@ services:
   localstack:
     image: thegeeksdiary/localstack-dev:latest
     container_name: localstack
-    ports:
-      # - "53:53"
-      - "443:443"
-      - "4566-4620:4566-4620"
-      - "4510-4559:4510-4559"
-      - "8080:8080"
+    # ports:
+    #   # - "53:53"
+    #   - "443:443"
+    #   - "4566-4620:4566-4620"
+    #   - "4510-4559:4510-4559"
+    #   - "8080:8080"
     environment:
       - SERVICES="serverless,cognito,rds,sqs,sns,cloudformation,opensearchserverless,opensearch,dynamodb,apigateway,apigatewayv2,lambda"
       - LOCALSTACK_HOSTNAME=localhost
