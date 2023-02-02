@@ -4,18 +4,15 @@ plugins:
   - serverless-localstack
 custom:
   localstack:
+    debug: true
     stages:
-      - local
-    lambda:
-      mountCode: False
-    docker:
-      # Enable this flag to run "docker ..." commands as sudo
-      sudo: True
+     - local
+     - dev
+    endpointFile: localstack_endpoints.json
 
 provider:
   name: aws
-  runtime: nodejs18.x #nodejs18.x
-  lambdaHashingVersion: '20201221'
+  runtime: nodejs12.x
   environment:
     DYNAMODB_TABLE: ${self:service}-${sls:stage}
   iam:
