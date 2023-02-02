@@ -27,11 +27,13 @@ services:
     stdin_open: true
     tty: true
     # network_mode: "host"
+    networks:
+      - development
   localstack:
     image: thegeeksdiary/localstack-dev:latest
     container_name: localstack
     ports:
-      - "53:53"
+      # - "53:53"
       - "443:443"
       - "4566-4620:4566-4620"
       - "4510-4559:4510-4559"
@@ -50,7 +52,7 @@ services:
       - PROVIDER_OVERRIDE_LAMBDA=asf
       - DOCKER_HOST=unix://
       - EAGER_SERVICE_LOADING=1
-      - LAMBDA_DOCKER_NETWORK=development
+      - LAMBDA_DOCKER_NETWORK="serverless-localstack-poc_development"
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock"
     # network_mode: "host"
