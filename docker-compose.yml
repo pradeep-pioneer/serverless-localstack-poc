@@ -17,10 +17,10 @@ services:
       # - "./tsconfig.json:/app-code/tsconfig.json"
       # - "./.ssh:/root/.ssh"
     environment:
-      - AWS_CONFIG_FILE=/root/.aws/config
-      - AWS_SHARED_CREDENTIALS_FILE=/root/.aws/credentials
-      - EDGE_PORT=4566
-      - LOCALSTACK_HOSTNAME=localhost
+      AWS_CONFIG_FILE: /root/.aws/config
+      AWS_SHARED_CREDENTIALS_FILE: /root/.aws/credentials
+      EDGE_PORT: 4566
+      LOCALSTACK_HOSTNAME: localstack
     depends_on:
       - localstack
     command: /bin/bash
@@ -39,20 +39,20 @@ services:
       - "4510-4559:4510-4559"
       - "8080:8080"
     environment:
-      - SERVICES="serverless,cognito,rds,sqs,sns,cloudformation,opensearchserverless,opensearch,dynamodb,apigateway,apigatewayv2,lambda"
-      - LOCALSTACK_HOSTNAME=localhost
-      - HOSTNAME=localhost
-      - HOSTNAME_EXTERNAL=localhost
-      - PERSISTENCE=1
-      - DEBUG=1
-      - PORT_WEB_UI=8080
-      - START_WEB=1
-      - LAMBDA_EXECUTOR=docker
-      - LAMBDA_REMOVE_CONTAINERS=0
-      - PROVIDER_OVERRIDE_LAMBDA=asf
-      - DOCKER_HOST=unix://
-      - EAGER_SERVICE_LOADING=1
-      - LAMBDA_DOCKER_NETWORK="serverless-localstack-poc_development"
+      SERVICES: "serverless,cognito,rds,sqs,sns,cloudformation,opensearchserverless,opensearch,dynamodb,apigateway,apigatewayv2,lambda"
+      LOCALSTACK_HOSTNAME: localhost
+      HOSTNAME: localhost
+      HOSTNAME_EXTERNAL: localhost
+      PERSISTENCE: 1
+      DEBUG: 1
+      PORT_WEB_UI: 8080
+      START_WEB: 1
+      LAMBDA_EXECUTOR: docker
+      LAMBDA_REMOVE_CONTAINERS: 0
+      PROVIDER_OVERRIDE_LAMBDA: asf
+      DOCKER_HOST: unix://
+      EAGER_SERVICE_LOADING: 1
+      LAMBDA_DOCKER_NETWORK: development
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock"
     # network_mode: "host"
