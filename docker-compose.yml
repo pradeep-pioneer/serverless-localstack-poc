@@ -49,6 +49,7 @@ services:
       - PROVIDER_OVERRIDE_LAMBDA=asf
       - DOCKER_HOST=unix:///var/run/docker.sock
       - EAGER_SERVICE_LOADING=1
+      - LAMBDA_DOCKER_NETWORK=app
     networks:
       - app
     volumes:
