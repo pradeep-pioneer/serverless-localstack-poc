@@ -21,8 +21,6 @@ services:
       - AWS_SHARED_CREDENTIALS_FILE=/root/.aws/credentials
       - EDGE_PORT=4566
       - LOCALSTACK_HOSTNAME=aws
-    networks:
-      - app
     depends_on:
       - aws
     command: /bin/bash
@@ -45,15 +43,11 @@ services:
       - DEBUG=1
       - PORT_WEB_UI=8080
       - START_WEB=1
-      - LAMBDA_EXECUTOR=docker
+      - LAMBDA_EXECUTOR=docker-reuse
+      - LAMBDA_REMOVE_CONTAINERS=0
       - PROVIDER_OVERRIDE_LAMBDA=asf
-      - DOCKER_HOST=unix:///var/run/docker.sock
+      - DOCKER_HOST=unix://
       - EAGER_SERVICE_LOADING=1
       - LAMBDA_DOCKER_NETWORK=app
-    networks:
-      - app
     volumes:
-      - "//var/run/docker.sock:/var/run/docker.sock"
-networks:
-  app:
-    driver: bridge
+      - "/var/run/docker.sock:/var/run/docker.sock"
