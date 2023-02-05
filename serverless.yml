@@ -8,7 +8,7 @@ custom:
     stages:
      - local
      - dev
-    endpointFile: localstack_endpoints.json
+    # endpointFile: localstack_endpoints.json
 
 provider:
   name: aws
