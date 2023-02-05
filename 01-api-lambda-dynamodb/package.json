@@ -8,7 +8,7 @@
         "watch": "tsc -w",
         "lint": "tslint '*.ts'",
         "clean-env": "rm -rf .serverless && rm -rf .yarn && rm -rf node_modules && rm yarn.lock",
-        "deploy-local": "npx tsc && docker-compose up -d && npx serverless deploy --stage local",
+        "deploy-local": "npx tsc && ../docker-compose up -d && npx serverless deploy --stage local",
         "clean-docker": "docker-compose down"
     },
     "keywords": [],

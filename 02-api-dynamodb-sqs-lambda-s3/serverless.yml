@@ -1,4 +1,4 @@
-service: todos-api-demo
+service: job-executor-demo
 frameworkVersion: '3'
 plugins:
   - serverless-localstack
@@ -8,26 +8,21 @@ custom:
     stages:
      - local
      - dev
-    # endpointFile: localstack_endpoints.json
-
 provider:
   name: aws
   runtime: nodejs12.x
   environment:
     DYNAMODB_TABLE: ${self:service}-${sls:stage}
-  iamRoleStatements:
-    - Effect: Allow
-      Action:
-        - dynamodb:Query
-        - dynamodb:Scan
-        - dynamodb:GetItem
-        - dynamodb:PutItem
-        - dynamodb:UpdateItem
-        - dynamodb:DeleteItem
-      Resource: "arn:aws:dynamodb:${aws:region}:*:table/${self:provider.environment.DYNAMODB_TABLE}"
+    S3_BUCKET: ${self:service}-${sls:stage}-results
+    SQS_NAME: ${self:service}-${sls:stage}-jobs
   iam:
     role:
       statements:
+        - Effect: Allow
+          Action:
+            - sqs:SendMessage
+          Resource:
+            - Fn::GetAtt: [ receiverQueue, Arn ]
         - Effect: Allow
           Action:
             - dynamodb:Query
@@ -37,43 +32,43 @@ provider:
             - dynamodb:UpdateItem
             - dynamodb:DeleteItem
           Resource: "arn:aws:dynamodb:${aws:region}:*:table/${self:provider.environment.DYNAMODB_TABLE}"
-
+        - Effect: Allow
+          Action:
+            - s3:PutObject
+            - s3:GetObject
+          Resource:
+            - 'arn:aws:s3:::${self:provider.environment.S3_BUCKET}/*'
 functions:
-  create:
-    handler: todos/create.create
+  createJob:
+    handler: jobs/create.create
     events:
       - http:
-          path: /todos
+          path: /jobs
           method: post
           cors: true
-
-  list:
-    handler: todos/list.list
+  listJobs:
+    handler: jobs/list.list
     events:
       - http:
-          path: /todos
+          path: /jobs
           method: get
           cors: true
-
-  get:
-    handler: todos/get.get
+  executeJob:
+    handler: results/execute.execute
     events:
-      - http:
-          path: /todos/{id}
-          method: get
-          cors: true
-
-  update:
-    handler: todos/update.update
-    events:
-      - http:
-          path: /todos/{id}
-          method: put
-          cors: true
-
+      - sqs:
+          arn:
+            Fn::GetAtt:
+              - receiverQueue
+              - Arn
 resources:
   Resources:
-    TodosDynamoDbTable:
+    receiverQueue:
+      Type: AWS::SQS::Queue
+      Properties:
+        QueueName: ${self:provider.environment.SQS_NAME}
+  Resources:
+    jobsDynamoDbTable:
       Type: 'AWS::DynamoDB::Table'
       DeletionPolicy: Retain
       Properties:

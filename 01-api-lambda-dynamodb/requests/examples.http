@@ -14,10 +14,10 @@
 
 
 
-# curl -H 'Content-Type: application/json' \
-#       -X POST \
-#       -d '{"text": "create a localstack POC","checked": false}' \
-#       http://localhost:4566/restapis/burkw02tz8/local/_user_request_/todos
+curl -H 'Content-Type: application/json' \
+      -X POST \
+      -d '{"text": "create a localstack POC","checked": false}' \
+      http://localhost:4566/restapis/hhx9akleau/local/_user_request_/todos
 
 # curl -H 'Content-Type: application/json' \
 #       -X GET \
