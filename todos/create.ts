@@ -4,9 +4,13 @@ import * as uuid from 'uuid'
 
 import { DynamoDB } from 'aws-sdk'
 
-const options = {endpoint: `http://${process.env.LOCALSTACK_HOSTNAME}:4566`}
+let dynamoDb = new DynamoDB.DocumentClient();
+if(process.env.LOCALSTACK_HOSTNAME && process.env.LOCALSTACK_HOSTNAME!==''){
+  const options = {endpoint: `http://${process.env.LOCALSTACK_HOSTNAME}:4566`}
+  dynamoDb = new DynamoDB.DocumentClient(options);
+}
 
-const dynamoDb = new DynamoDB.DocumentClient(options);
+
 
 module.exports.create = (event, context, callback) => {
   const timestamp = new Date().getTime()

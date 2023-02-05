@@ -2,7 +2,11 @@
 
 import { DynamoDB } from 'aws-sdk'; // eslint-disable-line import/no-extraneous-dependencies
 
-const dynamoDb = new DynamoDB.DocumentClient();
+let dynamoDb = new DynamoDB.DocumentClient();
+if(process.env.LOCALSTACK_HOSTNAME && process.env.LOCALSTACK_HOSTNAME!==''){
+  const options = {endpoint: `http://${process.env.LOCALSTACK_HOSTNAME}:4566`}
+  dynamoDb = new DynamoDB.DocumentClient(options);
+}
 
 module.exports.update = (event, context, callback) => {
   const timestamp = new Date().getTime();
