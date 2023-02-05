@@ -7,7 +7,7 @@ import { DynamoDB, SQS  } from 'aws-sdk'
 const queueName: string = process.env.SQS_NAME;
 
 let dynamoDb = new DynamoDB.DocumentClient();
-let sqs = new SQS().config;
+let sqs = new SQS();
 if(process.env.LOCALSTACK_HOSTNAME && process.env.LOCALSTACK_HOSTNAME!==''){
   const options = {endpoint: `http://${process.env.LOCALSTACK_HOSTNAME}:4566`}
   dynamoDb = new DynamoDB.DocumentClient(options);
