@@ -27,7 +27,7 @@ module.exports.create = (event, context, callback) => {
   
   const timestamp = new Date().getTime()
   const data = JSON.parse(event.body)
-  if (typeof data.text !== 'string') {
+  if (typeof data.searchTerm !== 'string') {
     console.error('\n\nValidation Failed\n\n')
     callback(new Error('Validation Failed: Invalid Data Received'))
     return
