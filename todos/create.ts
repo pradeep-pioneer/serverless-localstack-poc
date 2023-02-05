@@ -25,7 +25,9 @@ module.exports.create = (event, context, callback) => {
       updatedAt: timestamp
     }
   }
-
+  console.log('\n\n\n\n');
+  console.log(process.env.DYNAMODB_TABLE);
+  console.log('\n\n\n\n');
   // write the todo to the database
   dynamoDb.put(params, (error, result) => {
     // handle potential errors
