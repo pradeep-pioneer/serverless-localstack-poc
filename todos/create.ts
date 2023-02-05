@@ -5,6 +5,7 @@ import * as uuid from 'uuid'
 import { DynamoDB } from 'aws-sdk'
 
 // const options = {endpoint: `http://${process.env.HOSTNAME}:4566`}
+
 const dynamoDb = new DynamoDB.DocumentClient();
 
 module.exports.create = (event, context, callback) => {

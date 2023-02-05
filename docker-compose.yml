@@ -72,7 +72,7 @@ services:
       - EDGE_PORT=4566
       - SERVICES=lambda,s3,cloudformation,sts,dynamodb,apigateway
       - DEFAULT_REGION=us-east-1
-      - HOSTNAME="localstack"
+      - LOCALSTACK_HOSTNAME="localstack"
       - HOSTNAME_EXTERNAL="localstack"
     ports:
       - '4566-4597:4566-4597'
