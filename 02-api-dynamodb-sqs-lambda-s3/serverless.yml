@@ -11,6 +11,7 @@ custom:
 provider:
   name: aws
   runtime: nodejs12.x
+  stackName: job-executor-demo
   environment:
     DYNAMODB_TABLE: ${self:service}-${sls:stage}
     S3_BUCKET: ${self:service}-${sls:stage}-results
