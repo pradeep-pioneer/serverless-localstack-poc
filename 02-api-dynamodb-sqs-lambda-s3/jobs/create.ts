@@ -28,8 +28,8 @@ module.exports.create = (event, context, callback) => {
   const timestamp = new Date().getTime()
   const data = JSON.parse(event.body)
   if (typeof data.text !== 'string') {
-    console.error('Validation Failed')
-    callback(new Error('Couldn\'t create the todo item.'))
+    console.error('\n\nValidation Failed\n\n')
+    callback(new Error('Validation Failed: Invalid Data Received'))
     return
   }
 
