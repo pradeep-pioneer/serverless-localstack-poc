@@ -1,5 +1,11 @@
 import {SQSHandler, SQSMessageAttributes, SQSEvent, Context} from 'aws-lambda'
+import {DynamoDB} from 'aws-sdk'
 
+let dynamoDb = new DynamoDB.DocumentClient();
+if(process.env.LOCALSTACK_HOSTNAME && process.env.LOCALSTACK_HOSTNAME!==''){
+  const options = {endpoint: `http://${process.env.LOCALSTACK_HOSTNAME}:4566`}
+  dynamoDb = new DynamoDB.DocumentClient(options);
+}
 module.exports.execute = async (event: SQSEvent, context: Context) => {
   try {
     for (const record of event.Records) {
