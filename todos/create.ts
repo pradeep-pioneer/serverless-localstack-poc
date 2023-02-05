@@ -4,7 +4,7 @@ import * as uuid from 'uuid'
 
 import { DynamoDB } from 'aws-sdk'
 
-const options = {endpoint: `http://${process.env.LOCALSTACK_HOSTNAME}:4574`}
+const options = {endpoint: `http://${process.env.LOCALSTACK_HOSTNAME}:4569`}
 
 const dynamoDb = new DynamoDB.DocumentClient(options);
 
