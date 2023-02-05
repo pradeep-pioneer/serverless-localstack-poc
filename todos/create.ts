@@ -4,7 +4,7 @@ import * as uuid from 'uuid'
 
 import { DynamoDB } from 'aws-sdk'
 
-const dynamoDb = new DynamoDB.DocumentClient()
+const dynamoDb = new DynamoDB.DocumentClient({endpoint: `http://${process.env.HOSTNAME}:4566`})
 
 module.exports.create = (event, context, callback) => {
   const timestamp = new Date().getTime()
@@ -26,7 +26,8 @@ module.exports.create = (event, context, callback) => {
     }
   }
   console.log('\n\n\n\n');
-  console.log(process.env.DYNAMODB_TABLE);
+  console.log(`Host: http://${process.env.HOSTNAME}:4566`);
+  console.log(`Table: ${process.env.DYNAMODB_TABLE}`);
   console.log('\n\n\n\n');
   // write the todo to the database
   dynamoDb.put(params, (error, result) => {
