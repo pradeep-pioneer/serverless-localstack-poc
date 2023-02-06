@@ -9,7 +9,7 @@
         "lint": "tslint '*.ts'",
         "clean-env": "rm -rf .serverless && rm -rf .yarn && rm -rf node_modules && rm yarn.lock",
         "deploy-local": "npx tsc && docker-compose -f ../docker-compose.yml up -d && npx serverless deploy --stage local",
-        "clean-docker": "docker-compose down"
+        "clean-docker": "docker-compose -f ../docker-compose.yml down"
     },
     "keywords": [],
     "author": "",
@@ -18,12 +18,18 @@
         "@types/aws-lambda": "^8.10.110",
         "@types/aws-sdk": "0.0.42",
         "@types/node": "^7.0.5",
+        "@types/node-fetch": "^2.6.2",
+        "serverless-dotenv-plugin": "^4.0.2",
         "serverless-localstack": "^1.0.2",
         "tslint": "^5.5.0",
         "tslint-config-standard": "^6.0.1",
         "typescript": "^3.9.7"
     },
     "dependencies": {
-        "uuid": "^3.1.0"
+        "add": "^2.0.6",
+        "node-fetch": "2",
+        "unsplash-js": "^7.0.15",
+        "uuid": "^3.1.0",
+        "yarn": "^1.22.19"
     }
 }

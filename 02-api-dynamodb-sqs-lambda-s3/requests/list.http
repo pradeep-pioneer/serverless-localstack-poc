@@ -1,0 +1,6 @@
+@containerid = 1ed5c1c82k
+@hostname = localhost
+@envname = local
+
+GET http://{{hostname}}:4566/restapis/{{containerid}}/{{envname}}/_user_request_/jobs HTTP/1.1
+Content-Type: application/json

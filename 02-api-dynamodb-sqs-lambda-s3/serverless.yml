@@ -1,6 +1,7 @@
 service: job-executor-demo
 frameworkVersion: '3'
 plugins:
+  - serverless-dotenv-plugin
   - serverless-localstack
 custom:
   localstack:
@@ -8,6 +9,7 @@ custom:
     stages:
      - local
      - dev
+useDotenv: true
 provider:
   name: aws
   runtime: nodejs12.x
@@ -54,6 +56,13 @@ functions:
           path: /jobs
           method: get
           cors: true
+  listFiles:
+    handler: jobs/files.files
+    events:
+      - http:
+          path: /files
+          method: get
+          cors: true
   executeJob:
     handler: results/execute.execute
     events:
@@ -64,6 +73,10 @@ functions:
               - Arn
 resources:
   Resources:
+    resultsBucket:
+      Type: AWS::S3::Bucket
+      Properties:
+        BucketName: ${self:service}-${sls:stage}-results
     receiverQueue:
       Type: AWS::SQS::Queue
       Properties:
