@@ -49,13 +49,13 @@ module.exports.execute = async (event: SQSEvent, context: Context) => {
       // PROCESS HERE
       const msg = JSON.parse(record.body)
       const buffer = Buffer.from(record.body);
+      updateDatabase(msg.id, msg.searchTerm, true)
       await s3.putObject({Bucket: process.env.S3_BUCKET, Key: `${msg.id}.json`, Body: buffer }, (err, output)=>{
         if(err){
           console.log(err.message);
         }
         console.log(output.ETag);
       }).promise()
-      await updateDatabase(msg.id, msg.searchTerm, true)
     }
   } catch (error) {
     console.log(error);
