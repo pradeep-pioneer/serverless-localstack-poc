@@ -27,6 +27,10 @@ curl -H 'Content-Type: application/json' \
 #       -X GET \
 #       http://localhost:4566/restapis/burkw02tz8/local/_user_request_/todos
 
+curl -H 'Content-Type: application/json' \
+      -X GET \
+      http://localhost:4566/restapis/aaldh277nh/local/_user_request_/jobs
+
 # curl -H 'Content-Type: application/json' \
 #       -X PUT \
 #       -d '{"text": "localstack POC is created","checked": true}' \

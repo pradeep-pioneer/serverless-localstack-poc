@@ -1,8 +1,5 @@
 import {SQSHandler, SQSMessageAttributes, SQSEvent, Context} from 'aws-lambda'
 import {DynamoDB, S3} from 'aws-sdk'
-import fetch, * as nodeFetch from 'node-fetch';
-
-globalThis.fetch = nodeFetch.default as any;
 
 let dynamoDb = new DynamoDB.DocumentClient();
 let s3 = new S3();
